@@ -19,7 +19,7 @@ export const registerInstructor = async (req, res) => {
       const instructor = await Instructor.findOne({ email });
     //   if (role !== 'instructor') return res.status(400).send('Access denied');
       const companyId = Math.floor(Math.random() * 90000) + 10000;
-      if (!instructor) {
+      if (instructor) {
         return res.status(400).json({ msg: "Instructor already exists" });
         // Hash password and save user
       } else {
@@ -50,19 +50,27 @@ export const registerInstructor = async (req, res) => {
   
   //Login for Instructors
   export const loginInstructor = async (req, res) => {
-    // // Validate the request body using Joi
+    // Validate the request body using Joi
     const { error } = loginInstructorValidation.validate(req.body);
     if (error) {
       return res.status(400).send(error.details[0].message);
     }
   
     // Check if the user exists
+    // const { companyId, password } = req.body;
+    // const instructor = await Instructor.findOne({ companyId, role: "instructor"});
+    try {
+      // Check if the user exists
     const { companyId, password } = req.body;
     const instructor = await Instructor.findOne({ companyId, role: "instructor"});
-    try {
       if (!instructor) {
         return res.status(400).send("Company ID is invalid");
       }
+
+      const token = jwt.sign(
+        { companyId: instructor.companyId, id: instructor._id },
+        process.env.JWT_SECRET
+      );
       // Check if the user is an instructor
     //   if (role !== 'instructor') return res.status(400).send('Access denied');
   
@@ -70,6 +78,12 @@ export const registerInstructor = async (req, res) => {
       const validPassword = await bcrypt.compare(password, instructor.password);
       if (!validPassword) {
         return res.status(400).send("Password is invalid");
+
+      // const token = jwt.sign(
+      //   { companyId: instructor.companyId, id: instructor._id },
+      //   process.env.JWT_SECRET
+      // );
+
       } else {
         res.json({
           status: "success",
@@ -77,7 +91,8 @@ export const registerInstructor = async (req, res) => {
             firstname: instructor.firstname,
             lastname: instructor.lastname,
             email: instructor.email,
-            token: generateToken(instructor.id)
+            token: token
+            // token: generateToken(instructor.id)
           }
         });
       }
@@ -85,6 +100,8 @@ export const registerInstructor = async (req, res) => {
       console.log(error.message);
     }
   };
+
+
   
   // Forgot password
 export const forgotPasswordInstructor = async (req, res, next) => {
