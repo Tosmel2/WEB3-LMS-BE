@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import registerValidation from "../validation/register.js";
+// import registerValidation from "../validation/register.js";
 import generateToken from "../utilis/generateToken.js";
 import loginInstructorValidation from "../validation/loginInstructor.js";
 import crypto from "crypto";
@@ -8,10 +8,10 @@ import Instructor from "../model/Instructor.js";
 
 
 export const registerInstructor = async (req, res) => {
-    const { error } = registerValidation.validate(req.body);
-    if (error) {
-      return res.status(400).send(error.details[0].message);
-    }
+    // const { error } = registerValidation.validate(req.body);
+    // if (error) {
+    //   return res.status(400).send(error.details[0].message);
+    // }
     try {
       const { lastname, firstname, email, password, role} = req.body;
   
@@ -51,10 +51,10 @@ export const registerInstructor = async (req, res) => {
   //Login for Instructors
   export const loginInstructor = async (req, res) => {
     // Validate the request body using Joi
-    const { error } = loginInstructorValidation.validate(req.body);
-    if (error) {
-      return res.status(400).send(error.details[0].message);
-    }
+    // const { error } = loginInstructorValidation.validate(req.body);
+    // if (error) {
+    //   return res.status(400).send(error.details[0].message);
+    // }
   
     // Check if the user exists
     // const { companyId, password } = req.body;
