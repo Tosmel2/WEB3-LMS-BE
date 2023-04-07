@@ -11,6 +11,7 @@ const userRoleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    username: String,
     email: {
       type: String,
       required: true,
@@ -20,6 +21,9 @@ const userRoleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    about: String,
+    profession: String,
+    interests: String,
     phoneNumber: {
       type: String,
     },
