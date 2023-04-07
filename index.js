@@ -1,4 +1,5 @@
 import express from "express";
+import morgan from "morgan"
 import dotenv from "dotenv";
 import cors from "cors";
 import { dbConnect } from './config/dbConnect.js';
@@ -24,6 +25,7 @@ process.on('uncaughtException', (err) => {
   process.exit(1)
 })
 
+app.use(morgan('dev'))
 app.use(cors({ origin: '*' }))
 
 app.use(express.urlencoded({ extended: true }))
