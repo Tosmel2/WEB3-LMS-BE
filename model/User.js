@@ -11,7 +11,9 @@ const userRoleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    username: String,
+    username: {
+      type: String,
+    },
     email: {
       type: String,
       required: true,
@@ -21,9 +23,15 @@ const userRoleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    about: String,
-    profession: String,
-    interests: String,
+    about: {
+      type: String,
+    },
+    profession: {
+      type: String,
+    },
+    interests: {
+      type: String,
+    },
     phoneNumber: {
       type: String,
     },
@@ -32,7 +40,7 @@ const userRoleSchema = new mongoose.Schema(
       ref: 'Company',
     },
     // companyName: { type: String, required: true, lowercase: true },
-    companyName: { type: String},
+    companyName: { type: String },
     businessType: {
       type: String,
       enum: [],
