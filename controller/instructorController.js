@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 // import nodemailer from "nodemailer";  
@@ -7,7 +8,6 @@ import {sendEmail} from "../utilis/sendEmail.js";
 import loginInstructorValidation from "../validation/loginInstructor.js";
 import crypto from "crypto";
 import Instructor from "../model/Instructor.js";
-import dotenv from "dotenv";
 
 dotenv.config();
 
