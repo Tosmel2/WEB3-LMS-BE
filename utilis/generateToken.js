@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.Token_Key, {
-    expiresIn: process.env.Token_Expiry,
+  return jwt.sign({ id }, process.env.TOKEN_KEY, {
+    expiresIn: process.env.TOKEN_KEY,
   });
 };
 
