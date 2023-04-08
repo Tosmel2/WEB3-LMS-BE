@@ -107,19 +107,41 @@ export const deleteCourse = async (req, res) => {
 }
 
 // Search courses
+// export const searchCourses = async (req, res) => {
+//   try {
+//     // const { query } = req.params;
+//     // const regex = new RegExp(query, 'i'); // 'i' means case-insensitive
+//     const courses = await Course.find({ title: { $regex: searchQuery, $options: 'i' } });
+
+//     const searchQuery = req.query.q;
+//     let results = await db.query(`SELECT * FROM courses WHERE title LIKE '%${searchQuery}%'`);
+//     res.json(results.rows);
+
+//     results = courses.map((course) => ({
+//       id: course._id,
+//       title: course.title,
+//       description: course.description,
+//     }));
+
+//     return res.status(200).json({ results });
+//   } catch (error) {
+//     console.error(error.message);
+//     return res.status(500).send('Server Error');
+//   }
+// };
+
+
+
 export const searchCourses = async (req, res) => {
   try {
-    const { query } = req.params;
-    const regex = new RegExp(query, 'i'); // 'i' means case-insensitive
-    const courses = await Course.find({ title: { $regex: regex } });
-
     const searchQuery = req.query.q;
-    let results = await db.query(`SELECT * FROM courses WHERE title LIKE '%${searchQuery}%'`);
-    res.json(results.rows);
+    const courses = await Course.find({ title: { $regex: searchQuery, $options: 'i' } });
 
-    results = courses.map((course) => ({
+    const results = courses.map((course) => ({
       id: course._id,
       title: course.title,
+      instructor: course.instructor,
+      rating: course.rating,
       description: course.description,
     }));
 
@@ -129,4 +151,22 @@ export const searchCourses = async (req, res) => {
     return res.status(500).send('Server Error');
   }
 };
+
+
+
+
+
+
+
+// // In your courseController file
+// export const searchCourses = async (req, res) => {
+//   try {
+//     const searchQuery = req.query.q;
+//     // Implement your search logic here, for example:
+//     const courses = await Course.find({ title: { $regex: searchQuery, $options: 'i' } });
+//     res.status(200).json(courses);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 
