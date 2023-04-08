@@ -1,3 +1,5 @@
+import User from '../../model/User.js'
+
 export const profilePhotoUpload = async(req, res) => {
   // console.log(req.file);
   try {

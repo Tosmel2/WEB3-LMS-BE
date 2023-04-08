@@ -1,7 +1,7 @@
 import express from 'express'
 import multer from "multer";
 import {storage} from '../utilis/cloudinary.js';
-import { getUser } from "../controller/User/getUser.js";
+import { getUserById } from "../controller/User/getUser.js";
 import { loginUser } from "../controller/User/loginUser.js";
 import { registerUser } from "../controller/User/registerUser.js";
 import { deleteUser } from "../controller/User/deleteUser.js";
@@ -33,14 +33,14 @@ userRouters.get("/all_profiles", getAllUsers)
 // userRouters.get("/all_profiles", adminMiddleware, getAllUsers)
 
 // get user profile
-userRouters.get("/profile", authenticateToken , getUser)
+userRouters.get("/profile", authenticateToken , getUserById)
 // userRouters.get("/profile/:id", getUser)
 
 // delete user
 userRouters.delete("/:id", deleteUser)
 
 // update user
-userRouters.put("/:id", updateUser)
+userRouters.put("/profile/:id", updateUser)
 
 userRouters.post("/profile-image",authenticateToken, upload.single("profile"), profilePhotoUpload )
 

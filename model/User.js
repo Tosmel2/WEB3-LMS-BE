@@ -58,7 +58,9 @@ const userRoleSchema = new mongoose.Schema(
     registrationNo: {
       type: Number,
     },
-
+    profilephoto: {
+      type: String,
+    },
     role: {
       type: String,
       enum: ['superuser', 'admin', 'instructor', 'student'],

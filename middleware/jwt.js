@@ -1,34 +1,52 @@
 import jwt from 'jsonwebtoken'
 import expressjwt from 'express-jwt'
 import User from '../model/User.js'
+import { obtainToken } from '../utilis/obtainTokenFromHeader.js'
+import { verifyToken } from '../utilis/verifyToken.js'
 
 const JWT_SECRET = 'secret_key'
 
 // Generate JWT token
-export function generateToken(user) {
-  const token = jwt.sign({ _id: user._id, role: user.role }, JWT_SECRET, {
-    expiresIn: '1h',
-  })
-  return token
-}
+// export function generateToken(user) {
+//   const token = jwt.sign({ _id: user._id, role: user.role }, JWT_SECRET, {
+//     expiresIn: '1h',
+//   })
+//   return token
+// }
 
 // Authenticate JWT token
-export function authenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(' ')[1]
+// export function authenticateToken(req, res, next) {
+//   const authHeader = req.headers['authorization']
+//   const token = authHeader && authHeader.split(' ')[1]
 
-  if (token == null) {
-    return res.status(401).json({ message: 'Access denied. Token required.' })
+//   if (token == null) {
+//     return res.status(401).json({ message: 'Access denied. Token required.' })
+//   }
+
+//   jwt.verify(token, JWT_SECRET, (err, decoded) => {
+//     if (err) {
+//       return res.status(403).json({ message: 'Invalid token.' })
+//     }
+//     req.user = decoded
+//     next()
+//   })
+// }
+
+export const authenticateToken = async (req, res, next) => {
+  const token = obtainToken(req);
+  const userDecoded = verifyToken(token);
+
+  req.userAuth = userDecoded.id;
+
+  if (!userDecoded) {
+    return res.json({
+      status: "error",
+      message: "kindly login because the token is either expired or invalid",
+    });
+  } else {
+    next();
   }
-
-  jwt.verify(token, JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(403).json({ message: 'Invalid token.' })
-    }
-    req.user = decoded
-    next()
-  })
-}
+};
 
 // Authorize user by role
 export  function authorizeRole(role) {

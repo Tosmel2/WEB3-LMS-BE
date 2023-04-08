@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 export const loginValidation = Joi.object({
-  email: Joi.string().email().min(3).max(70).required(),
+  email: Joi.string().min(3).max(70).required(),
   password: Joi.string().required()
 
     // .pattern(
