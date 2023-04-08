@@ -32,6 +32,7 @@ const JWT_SECRET = 'secret_key'
 //   })
 // }
 
+
 export const authenticateToken = async (req, res, next) => {
   const token = obtainToken(req);
   const userDecoded = verifyToken(token);
