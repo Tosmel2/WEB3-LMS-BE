@@ -9,6 +9,6 @@ export const loginValidation = Joi.object({
     //     '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
     //   )
     // )
-    .required("student"),
+    // .required("student"),
 });
 export default loginValidation;
